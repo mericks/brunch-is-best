@@ -1,6 +1,6 @@
 const http = require('http');
 const app = require('./lib/app');
-// require ('./lib/connection');
+require ('./lib/connection');
 
 const server = http.createServer(app);
 const port = 8080;
