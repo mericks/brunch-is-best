@@ -16,9 +16,13 @@ describe('Restaurant model', () => {
         quadrant: 'NW'
     });
 
-    it('accepts all fields', () => {
+    before(() => {
         user.save();
         nabe.save();
+    });
+
+
+    it('accepts all fields', () => {
         return new Restaurant({
             name: 'Test Restaurant',
             neighborhood: nabe._id,
