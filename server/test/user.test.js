@@ -3,10 +3,10 @@ const User = require('../lib/models/user');
 
 describe('User model', () => {
 
+
     it('accepts all fields', () => {
         return new User({
-            firstName: 'John',
-            lastName: 'Smith',
+            name: { first: 'John', last: 'Smith' },
             email: 'user@email.com',
             password: 'abc'
         }).validate();
@@ -14,7 +14,7 @@ describe('User model', () => {
 
     it('requires firstName (validation fails when no firstName)', () => {
         const user = new User({
-            lastName: 'Smith',
+            name: { last: 'Smith' },
             email: 'user@email.com',
             password: 'abc'
         });
@@ -27,7 +27,7 @@ describe('User model', () => {
 
     it('requires lastName (validation fails when no lastName)', () => {
         const user = new User({
-            firstName: 'John',
+            name: { first: 'John' },
             email: 'user@email.com',
             password: 'abc'
         });
@@ -40,8 +40,7 @@ describe('User model', () => {
 
     it('requires email (validation fails when no email)', () => {
         const user = new User({
-            firstName: 'John',
-            lastName: 'Smith',
+            name: { first: 'John', last: 'Smith' },
             password: 'abc'
         });
         return user.validate()
@@ -53,8 +52,7 @@ describe('User model', () => {
 
     it('requires password (validation fails when no password)', () => {
         const user = new User({
-            firstName: 'John',
-            lastName: 'Smith',
+            name: { first: 'John', last: 'Smith' },
             email: 'user@email.com',
         });
         return user.validate()
