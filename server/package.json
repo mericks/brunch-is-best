@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint",
     "pretest": "npm run lint",
-    "test": "mocha",
+    "test": "mocha --recursive",
     "start": "node server",
     "start:watch": "nodemon server"
   },
