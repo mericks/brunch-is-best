@@ -6,13 +6,14 @@
   "scripts": {
     "lint": "eslint",
     "pretest": "npm run lint",
-    "test": "mocha",
+    "test": "mocha --recursive",
     "start": "node server",
     "start:watch": "nodemon server"
   },
   "author": "Michelle Erickson",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "express": "^4.15.2",
     "mongoose": "^4.9.4",
