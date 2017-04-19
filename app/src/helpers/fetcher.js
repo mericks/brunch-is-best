@@ -15,5 +15,14 @@ export default function fetcher({ path, method, token, body }) {
         apiData.body = JSON.stringify(body);
     }
 
-    return fetch( `/api${path}`, apiData);
+    return fetch( `/api${path}`, apiData)
+        .then(res => {
+            if(!res.ok) {
+                throw new Error(res.statusText);
+            }
+            return res;
+        })
+        .then(res => {
+            return res.json();
+        });
 }
