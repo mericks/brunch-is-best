@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SingleInput from './SingleInput';
+import fetcher from '../../helpers/fetcher';
 
 class SignInForm extends Component {
     constructor(props) {
@@ -8,22 +9,11 @@ class SignInForm extends Component {
             email: '',
             password: '',
         };
-
         this.handleFormSignIn = this.handleFormSignIn.bind(this);
         this.handleFormClear = this.handleFormClear.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    // componentDidMount() {
-    //     fetch('./fetchToDB')
-    //         .then(res => res.json())
-    //         .then(input => {
-    //             this.setState({
-    //                 email: input.email,
-    //                 password: input.password
-    //             });
-    //         });
-    // }
 
     handleFormSignIn(e) {
         e.preventDefault();
@@ -32,9 +22,18 @@ class SignInForm extends Component {
             email: this.state.email,
             password: this.state.password
         };
-
         console.log('to be sent to DB - formPayload', formPayload);
-        // this.handleFormClear(e);
+
+        fetcher({
+            path: '/auth/signin',
+            method: 'POST',
+            body: formPayload,
+        })
+        .then(token => {
+            this.props.handleSignIn(token)
+            // this.handleFormClear(e)
+        })
+        .catch();
     }
 
     handleFormClear(e) {
