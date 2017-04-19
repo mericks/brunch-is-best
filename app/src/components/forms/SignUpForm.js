@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SingleInput from './SingleInput';
+import fetcher from '../../helpers/fetcher';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -10,22 +11,11 @@ class SignUpForm extends Component {
             email: '',
             password: '',
         };
-
         this.handleFormSignUp = this.handleFormSignUp.bind(this);
         this.handleFormClear = this.handleFormClear.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    // componentDidMount() {
-    //     fetch('./fetchToDB')
-    //         .then(res => res.json())
-    //         .then(input => {
-    //             this.setState({
-    //                 email: input.email,
-    //                 password: input.password
-    //             });
-    //         });
-    // }
 
     handleFormSignUp(e) {
         e.preventDefault();
@@ -35,9 +25,17 @@ class SignUpForm extends Component {
             email: this.state.email,
             password: this.state.password
         };
-
         console.log('to be sent to DB - formPayload', formPayload);
-        // this.handleFormClear(e);
+
+        fetcher({
+            path: '/auth/signup',
+            method: 'POST',
+            body: formPayload,
+        })
+        .then(token => {
+            this.props.handleSignIn(token)
+            // this.handleFormClear(e)    //TODO: figure out what to do when signing doesn't work
+        });
     }
 
     handleFormClear(e) {
