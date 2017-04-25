@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import fetcher from '../../helpers/fetcher';
 import Nav from './Nav';
+import Neighborhoods from './Neighborhoods';
 import Footer from '../Footer';
 
 
-const Neighborhoods = (props) => {
-    return (
-        <h1>This is the NABE component</h1>
-    );
-}
 
 class Dashboard extends Component {
     constructor(props) {
@@ -71,7 +67,7 @@ class Dashboard extends Component {
             // <Router>
                 <div>
                     <Nav />
-                    <Neighborhoods />
+                    <Neighborhoods neighborhoods={this.state.neighborhoods} />
                     <Footer />
                 </div>
             // </Router>
