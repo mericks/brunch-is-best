@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SingleInput from './SingleInput';
+import SingleInput from './formComponents/SingleInput';
 import fetcher from '../../helpers/fetcher';
 
 class SignInForm extends Component {
