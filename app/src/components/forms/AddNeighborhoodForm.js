@@ -8,7 +8,6 @@ class AddNeighborhoodForm extends Component {
         super(props);
         this.state = {
             name: '',
-            // quadrant: ['N','NE', 'NW', 'SE', 'SW'],
             quadSelected: '',
         };
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -52,6 +51,12 @@ class AddNeighborhoodForm extends Component {
 
 
     render() {
+        let idx = this.props.quadrants.indexOf('View All');
+        console.log(idx);
+        if(idx !== -1) {
+            this.props.quadrants.splice(idx, 1);
+        }
+
         return (
             <div>
                 <hr />
