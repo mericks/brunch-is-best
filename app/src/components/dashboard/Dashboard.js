@@ -17,6 +17,7 @@ class Dashboard extends Component {
         };
         // this.fetchUser = this.fetchUser.bind(this);
         this.fetchNeighborhoods = this.fetchNeighborhoods.bind(this);
+        this.updateNeighborhoods = this.updateNeighborhoods.bind(this);
     }
 
     
@@ -61,13 +62,18 @@ class Dashboard extends Component {
         })
     }
 
+    updateNeighborhoods(neighborhood) {
+        let initialNeighborhoods = this.state.neighborhoods;
+        let updatedNeighborhoods = [ ...initialNeighborhoods, neighborhood];
+        this.setState({ neighborhoods: updatedNeighborhoods });
+    }
 
     render() {
         return (
             // <Router>
                 <div>
                     <Nav />
-                    <Neighborhoods neighborhoods={this.state.neighborhoods} />
+                    <Neighborhoods neighborhoods={this.state.neighborhoods} updateNeighborhoods={this.updateNeighborhoods} />
                     <Footer />
                 </div>
             // </Router>

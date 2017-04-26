@@ -1,4 +1,5 @@
 import React from 'react';
+import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
 
 
 const Neighborhoods = props => (
@@ -9,6 +10,7 @@ const Neighborhoods = props => (
             <li key={neighborhood._id}>{neighborhood.name}</li>
             )}
         </ul>
+        <AddNeighborhoodForm updateNeighborhoods={props.updateNeighborhoods}/>
     </div>
 );
 
