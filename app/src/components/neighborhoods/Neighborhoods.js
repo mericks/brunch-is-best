@@ -46,7 +46,7 @@ class Neighborhoods extends Component {
     }
 
     updateView(quadrant) {
-        this.setState({ selectedView: quadrant });
+        this.setState({ selectedQuadrant: quadrant });
         if(quadrant === 'View All') {
             this.setState({ selectedView: this.state.neighborhoods })
         } else {
