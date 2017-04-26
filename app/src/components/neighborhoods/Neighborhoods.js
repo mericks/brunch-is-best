@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetcher from '../../helpers/fetcher';
 import NeighborhoodsView from './NeighborhoodsView';
 import QuadrantViewsMenu from './QuadrantViewsMenu';
-import QuadrantViews from './QuadrantViews';
+// import QuadrantViews from './QuadrantViews';
 import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
 
 
@@ -66,8 +66,8 @@ class Neighborhoods extends Component {
         return (
             <div>
                 <QuadrantViewsMenu quadrants={this.state.quadrants}/>
-                <QuadrantViews selectedView={this.state.selectedView}/>
-                <NeighborhoodsView neighborhoods={this.state.neighborhoods}/>
+                {/*<QuadrantViews selectedView={this.state.selectedView}/>*/}
+                <NeighborhoodsView selectedView={this.state.selectedView}/>
                 <AddNeighborhoodForm quadrants={this.state.quadrants} updateNeighborhoods={this.updateNeighborhoods}/>
             </div>
         );
