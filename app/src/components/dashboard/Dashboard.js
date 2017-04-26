@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 // import fetcher from '../../helpers/fetcher';
 import Nav from './Nav';
-import Neighborhoods from './Neighborhoods';
+import Neighborhoods from '../neighborhoods/Neighborhoods';
 import Footer from '../Footer';
 
 
