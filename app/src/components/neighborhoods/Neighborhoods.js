@@ -1,27 +1,9 @@
 import React, { Component } from 'react';
 import fetcher from '../../helpers/fetcher';
+import NeighborhoodsView from './NeighborhoodsView';
+import QuadrantViewsMenu from './QuadrantViewsMenu';
+import QuadrantViews from './QuadrantViews';
 import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
-
-
-const QuadrantViews = props => (
-    <div>
-        <h4>View Neighborhoods by Quadrant</h4>
-        <ul>
-            {props.quadrants.map(quadrant =>
-            <li key={quadrant}>{quadrant}</li>
-            )}
-        </ul>
-        <hr />
-    </div>
-);
-
-const AllNeighborhoodsView = props => (
-    <ul>
-        {props.neighborhoods.map(neighborhood =>
-        <li key={neighborhood._id}>{neighborhood.name}</li>
-        )}
-    </ul>
-);
 
 
 
@@ -31,9 +13,12 @@ class Neighborhoods extends Component {
         this.state = {
             neighborhoods: [],
             quadrants: ['N','NE', 'NW', 'SE', 'SW', 'View All'],
+            selectedQuadrant: 'View All',
+            selectedView: [],
         };
         this.fetchNeighborhoods = this.fetchNeighborhoods.bind(this);
         this.updateNeighborhoods = this.updateNeighborhoods.bind(this);
+        this.updateView = this.updateView.bind(this);
     }
 
     componentDidMount() {
@@ -61,11 +46,28 @@ class Neighborhoods extends Component {
         this.setState({ neighborhoods: updatedNeighborhoods });
     }
 
+    updateView() {
+        console.log('inside updateView')
+        if(this.state.selectedQuadrant === 'View All') {
+            this.setState({ selectedView: this.state.neighborhoods })
+        } else {
+            let updatedView = this.state.neighborhoods.filter(neighborhood => {
+                return neighborhood.quadrant === this.state.selectedQuadrant
+            })
+            console.log('updatedView: ', updatedView);
+            this.setState({ selectedView: updatedView})
+        }
+    }
+
+
+  
+
     render() {
         return (
             <div>
-                <QuadrantViews quadrants={this.state.quadrants}/>
-                <AllNeighborhoodsView neighborhoods={this.state.neighborhoods}/>
+                <QuadrantViewsMenu quadrants={this.state.quadrants}/>
+                <QuadrantViews selectedView={this.state.selectedView}/>
+                <NeighborhoodsView neighborhoods={this.state.neighborhoods}/>
                 <AddNeighborhoodForm quadrants={this.state.quadrants} updateNeighborhoods={this.updateNeighborhoods}/>
             </div>
         );
