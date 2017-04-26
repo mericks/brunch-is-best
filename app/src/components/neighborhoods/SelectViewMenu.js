@@ -1,16 +1,16 @@
 import React from 'react';
 
 
-const QuadrantViewsMenu = props => (
+const SelectViewMenu = props => (
     <div>
         <h4>View Neighborhoods by Quadrant</h4>
         <ul>
             {props.quadrants.map(quadrant =>
-            <li key={quadrant}>{quadrant}</li>
+            <li key={quadrant} onClick={() => props.updateView(quadrant)}>{quadrant}</li>
             )}
         </ul>
         <hr />
     </div>
 );
 
-export default QuadrantViewsMenu;
+export default SelectViewMenu;
