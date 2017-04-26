@@ -8,7 +8,7 @@ class AddNeighborhoodForm extends Component {
         super(props);
         this.state = {
             name: '',
-            quadrant: ['N','NE', 'NW', 'SE', 'SW'],
+            // quadrant: ['N','NE', 'NW', 'SE', 'SW'],
             quadSelected: '',
         };
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -67,7 +67,7 @@ class AddNeighborhoodForm extends Component {
                         name={'quadrant'}
                         placeholder={'Select a quadrant'}
                         controlFunc={this.handleQuadSelect}
-                        options={this.state.quadrant}
+                        options={this.props.quadrants}
                         selectedOption={this.state.quadSelected} />
                     <input
                         type='submit'
