@@ -55,11 +55,8 @@ class Dashboard extends Component {
             token: brnchtkn,
         })
         .then(neighborhoods => {
-            console.log(neighborhoods);
-            this.setState({
-                neighborhoods: neighborhoods
-            });
-        })
+            this.setState({ neighborhoods: neighborhoods });
+        });
     }
 
     updateNeighborhoods(neighborhood) {
