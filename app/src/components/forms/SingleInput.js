@@ -1,21 +1,19 @@
 import React from 'react';
 
-const SingleInput = (props) => {
-    return (
-        <div>
-            <label>{props.title}</label>
-            <input
-                name={props.name}
-                type={props.inputType}
-                value={props.content}
-                onChange={props.controlFunc}
-                placeholder={props.placeholder} />
-        </div>
-    )
-}
+const SingleInput = (props) => (
+    <div>
+        <label>{props.title}</label>
+        <input
+            name={props.name}
+            type={props.inputType}
+            value={props.content}
+            onChange={props.controlFunc}
+            placeholder={props.placeholder} />
+    </div>
+); 
 
 // SingleInput.propTypes = {
-//     title: PropTypes.string.isRequired,
+//     title: PropTypes.string,
 //     name: PropTypes.string.isRequired,
 //     inputType: PropTypes.oneOf(['text', 'number', 'password']).isRequired,
 //     content: PropTypes.oneOfType([
