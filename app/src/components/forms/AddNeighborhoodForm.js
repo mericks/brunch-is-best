@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SingleInput from './SingleInput';
-import Select from './Select';
+import SingleInput from './formComponents/SingleInput';
+import Select from './formComponents/Select';
 import fetcher from '../../helpers/fetcher';
 
 class AddNeighborhoodForm extends Component {
