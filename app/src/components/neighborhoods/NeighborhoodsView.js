@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const NeighborhoodsView = props => (
@@ -6,7 +7,7 @@ const NeighborhoodsView = props => (
         <h3>Neighborhoods</h3>
         <ul>
             {props.selectedView.map(neighborhood =>
-            <li key={neighborhood._id}>{neighborhood.name}</li>
+            <li key={neighborhood._id}><Link to={`/neighborhoods/${neighborhood._id}`}>{neighborhood.name}</Link></li>
             )}
         </ul>
     </div>
