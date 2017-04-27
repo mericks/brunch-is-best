@@ -3,18 +3,26 @@ import SingleInput from './formComponents/SingleInput';
 import Select from './formComponents/Select';
 import fetcher from '../../helpers/fetcher';
 
+
 class AddNeighborhoodForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
             quadSelected: '',
+            quadrantOpts: [],
         };
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleQuadSelect = this.handleQuadSelect.bind(this);
         this.handleFormClear = this.handleFormClear.bind(this);
+        this.setQuadrantOpts = this.setQuadrantOpts.bind(this);
     }
+
+    componentDidMount() {
+        this.setQuadrantOpts();
+    }
+
 
     handleFormSubmit(e) {
         e.preventDefault();
@@ -49,14 +57,18 @@ class AddNeighborhoodForm extends Component {
         });
     }
 
-
-    render() {
-        let idx = this.props.quadrants.indexOf('View All');
+    setQuadrantOpts() {
+        let quadrantOpts = this.props.quadrants.slice();
+        let idx = quadrantOpts.indexOf('View All');
         console.log(idx);
         if(idx !== -1) {
-            this.props.quadrants.splice(idx, 1);
+            quadrantOpts.splice(idx, 1);
         }
+        this.setState({ quadrantOpts: quadrantOpts });
+    }
 
+
+    render() {
         return (
             <div>
                 <hr />
@@ -72,7 +84,7 @@ class AddNeighborhoodForm extends Component {
                         name={'quadrant'}
                         placeholder={'Select a quadrant'}
                         controlFunc={this.handleQuadSelect}
-                        options={this.props.quadrants}
+                        options={this.state.quadrantOpts}
                         selectedOption={this.state.quadSelected} />
                     <input
                         type='submit'
