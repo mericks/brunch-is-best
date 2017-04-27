@@ -60,7 +60,6 @@ class AddNeighborhoodForm extends Component {
     setQuadrantOpts() {
         let quadrantOpts = this.props.quadrants.slice();
         let idx = quadrantOpts.indexOf('View All');
-        console.log(idx);
         if(idx !== -1) {
             quadrantOpts.splice(idx, 1);
         }
