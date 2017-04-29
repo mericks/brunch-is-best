@@ -12,6 +12,21 @@ describe('User model', () => {
         }).validate();
     });
 
+    it('sets hash from password and correctly compares', () => {
+        const hashTestUser = {
+            name: { first: 'Jane', last: 'Smith'},
+            email: 'hashTestUser@email.com',
+            password: 'hashtest'
+        };
+        const user = new User(hashTestUser);
+
+        assert.isUndefined(user.password);
+        assert.notEqual(user.hash, hashTestUser.password);
+
+        assert.isTrue(user.comparePassword('hashtest'));
+        assert.isFalse(user.comparePassword('not the password'));
+    });
+
     it('requires firstName (validation fails when no firstName)', () => {
         const user = new User({
             name: { last: 'Smith' },
