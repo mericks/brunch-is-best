@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 // import fetcher from './helpers/fetcher';
 import Home from './components/home/Home';
-import SignUpForm from './components/forms/SignUpForm';
 import Dashboard from './components/dashboard/Dashboard';
 
 
@@ -82,7 +81,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path='/' render={(props) => (
+          <Route exact path='/' render={props => (
             this.state.signedIn ? (
               <Redirect to={{
                 pathname: '/dashboard',
@@ -93,9 +92,8 @@ class App extends Component {
             )
           )} />
           
-          <Route exact path='/signup' render={(props) => <SignUpForm handleSignIn={this.handleSignIn} /> } />
-          <Route exact path='/dashboard' render={(props) => <Dashboard /> } />
-
+          <Route exact path='/dashboard' render={ props => <Dashboard /> } />
+          <Route exact path='/signin' render={ props => <Home handleSignIn={this.handleSignIn} /> } />
         </div>
       </Router>
     );
