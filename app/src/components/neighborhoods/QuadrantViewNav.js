@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const SelectViewMenu = props => (
+const QuadrantViewNav = props => (
     <div>
         <h4>View Neighborhoods by Quadrant</h4>
         <ul>
@@ -13,4 +13,4 @@ const SelectViewMenu = props => (
     </div>
 );
 
-export default SelectViewMenu;
+export default QuadrantViewNav;
