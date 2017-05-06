@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 
-const NeighborhoodsView = props => (
+const RestaurantView = props => (
     <div>
-        <h3>Neighborhoods</h3>
-        <ul>
+        <h3>This is the detailed view of a restaurant: RestaurantView</h3>
+        {/*<ul>
             {props.selectedView.map(neighborhood =>
             <li key={neighborhood._id}><Link to={`/neighborhoods/${neighborhood.name}/restaurants`}>{neighborhood.name}</Link></li>
             )}
-        </ul>
+        </ul>*/}
     </div>
 );
 
-export default NeighborhoodsView;
+export default RestaurantView;
