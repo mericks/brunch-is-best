@@ -1,4 +1,4 @@
-const tokenService = require('./token');
+const tokenService = require('./token-service');
 
 module.exports = function getEnsureAuth() {
 
