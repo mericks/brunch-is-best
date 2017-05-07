@@ -15,7 +15,6 @@ export default {
     },
 
     signin(formPayload) {
-        console.log('inside auth-service signin function');
         return http.fetch({
             path: '/auth/signin',
             method: 'POST',
