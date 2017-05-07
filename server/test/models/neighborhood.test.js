@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const Neighborhood = require('../lib/models/neighborhood');
+const Neighborhood = require('../../lib/models/neighborhood');
 
 describe('Neighborhood model', () => {
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Nav = (props) => (
+const Nav = props => (
     <div>
-        <h1>NAV COMPONENT</h1>
+        <h1>Welcome {props.userFirstName}. This is the Nav/Header component.</h1>
     </div>
 );
 

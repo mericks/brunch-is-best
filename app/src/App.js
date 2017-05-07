@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 // import fetcher from './helpers/fetcher';
 import Home from './components/home/Home';
-import SignUpForm from './components/forms/SignUpForm';
 import Dashboard from './components/dashboard/Dashboard';
 
 
@@ -51,17 +50,13 @@ class App extends Component {
   //   } 
   // }
 
-  handleSignIn(token) {
+  handleSignIn() {
     console.log('handleSignIn called');
-    console.log('this is token before local storage: ', token);
-    localStorage.setItem('brnchtkn', JSON.stringify(token));
-    console.log('local storage should be set');
-    // console.log('this is getting it from LS: ', JSON.parse(localStorage.getItem('brnchtkn')));
-    if(token) {
-      this.setState({
-        signedIn: true,
-        token,
-      });
+    if(localStorage.getItem('brnchtkn')) {
+      console.log('brnchtkn exists');
+      let storageToken = JSON.parse(localStorage.getItem('brnchtkn'));
+      console.log('storageToken: ', storageToken);
+      this.setState({ signedIn: true });
     }
   }
 
@@ -82,7 +77,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path='/' render={(props) => (
+          <Route exact path='/' render={props => (
             this.state.signedIn ? (
               <Redirect to={{
                 pathname: '/dashboard',
@@ -93,9 +88,8 @@ class App extends Component {
             )
           )} />
           
-          <Route exact path='/signup' render={(props) => <SignUpForm handleSignIn={this.handleSignIn} /> } />
-          <Route exact path='/dashboard' render={(props) => <Dashboard /> } />
-
+          <Route exact path='/dashboard' render={ props => <Dashboard token={this.state.token}/> } />
+          <Route exact path='/signin' render={ props => <Home handleSignIn={this.handleSignIn} /> } />
         </div>
       </Router>
     );

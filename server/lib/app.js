@@ -6,6 +6,7 @@ const errorHandler= require('./error-handler')();
 const auth = require('./routes/auth');
 const user = require('./routes/user');
 const neighborhoods = require('./routes/neighborhoods');
+const restaurants = require('./routes/restaurants');
 
 app.use(morgan);
 app.use(cors);
@@ -13,6 +14,7 @@ app.use(cors);
 app.use('/api/auth', auth);
 app.use('/api/user', user);
 app.use('/api/neighborhoods', neighborhoods);
+app.use('/api/restaurants', restaurants);
 
 app.use(errorHandler);
 module.exports = app;

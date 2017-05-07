@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bodyParser = require('body-parser').json();
 const User = require('../models/user');
-const token = require('../auth/token');
+const tokenService = require('../auth/token-service');
 const ensureAuth = require('../auth/ensure-auth')();
 
 function hasEmailAndPassword(req, res, next) {
@@ -35,7 +35,7 @@ router
 
                 return new User(input).save();
             })
-            .then(user => token.sign(user))
+            .then(user => tokenService.sign(user))
             .then(token => res.send({ token }))
             .catch(next);
     })
@@ -55,7 +55,7 @@ router
 
                 return user;
             })
-            .then(user => token.sign(user))
+            .then(user => tokenService.sign(user))
             .then(token => res.send({ token }))
             .catch(next);
     });

@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
-const User = require('../lib/models/user');
-const Neighborhood = require('../lib/models/neighborhood');
-const Restaurant = require('../lib/models/restaurant');
+const User = require('../../lib/models/user');
+const Neighborhood = require('../../lib/models/neighborhood');
+const Restaurant = require('../../lib/models/restaurant');
 
 describe('Restaurant model', () => {
 
