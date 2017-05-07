@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SingleInput from './formComponents/SingleInput';
-import fetcher from '../../helpers/fetcher';
+import authService from '../../services/auth-service';
 
 class SignInForm extends Component {
     constructor(props) {
@@ -22,27 +22,10 @@ class SignInForm extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        console.log('to be sent to DB - formPayload', formPayload);
 
-        fetcher({
-            path: '/auth/signin',
-            method: 'POST',
-            body: formPayload,
-        })
-        .then(token => {
-            this.props.handleSignIn(token)
-            // this.handleFormClear(e)
-        })
-        .catch();
-    }
-
-    handleFormClear(e) {
-        e.preventDefault();
-
-        this.setState({
-            email: '',
-            password: ''
-        })
+        authService.signin(formPayload)
+        .then(() => this.props.handleSignIn())
+        .catch(err => console.log(err));
     }
 
     handleChange(e) {
