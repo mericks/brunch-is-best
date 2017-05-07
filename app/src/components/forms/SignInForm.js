@@ -10,7 +10,6 @@ class SignInForm extends Component {
             password: '',
         };
         this.handleFormSignIn = this.handleFormSignIn.bind(this);
-        this.handleFormClear = this.handleFormClear.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
