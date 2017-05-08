@@ -3,6 +3,8 @@ let token = '';
 
 export default {
 
+    token,
+
     setToken(tokenToSet) {
         token = tokenToSet;
     },
