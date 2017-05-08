@@ -51,7 +51,8 @@ class App extends Component {
 
   handleSignIn() {
     if(localStorage.getItem('brnchtkn')) {
-      let storageToken = JSON.parse(localStorage.getItem('brnchtkn'));
+      // let storageToken = JSON.parse(localStorage.getItem('brnchtkn'));
+      // console.log('this is storageToken: ', storageToken);
       this.setState({ signedIn: true });
     }
   }
