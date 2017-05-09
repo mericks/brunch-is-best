@@ -1,16 +1,21 @@
 
-let token = '';
-
 export default {
-
-    token,
-
+    
     setToken(tokenToSet) {
-        token = tokenToSet;
+        this.token = tokenToSet;
+        // console.log('from http setToken: ', token);
     },
 
     clearToken() {
-        token = '';
+        this.token = '';
+    },
+
+    setUserID(userIDtoSet) {
+        this.userID = userIDtoSet;
+    },
+
+    clearUserID() {
+        this.userID = '';
     },
 
     fetch({ path, method, token, body }) { 
