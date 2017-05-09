@@ -1,5 +1,10 @@
 import http from './http';
 
+function setToken(token) {
+    http.setToken(token);
+    localStorage.setItem('brnchtkn', JSON.stringify(token));
+}
+
 export default {
     signup(formPayload) {
         return http.fetch({
@@ -7,10 +12,7 @@ export default {
             method: 'POST',
             body: formPayload,
         })
-        .then(token => {
-            http.setToken(({ token }));
-            localStorage.setItem('brnchtkn', JSON.stringify(token));
-        })
+        .then(({ token }) => setToken(token))
         .catch(err => console.log(err));
     },
 
@@ -20,12 +22,9 @@ export default {
             method: 'POST',
             body: formPayload,
         })
-        .then(token => {
-            http.setToken(({ token }));
-            localStorage.setItem('brnchtkn', JSON.stringify(token));
-        })
+        .then(({ token }) => setToken(token))
         .catch(err => console.log(err));
-    },
+    }
 
 
     // TODO: logout function
