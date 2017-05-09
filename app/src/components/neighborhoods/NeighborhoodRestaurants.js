@@ -30,7 +30,7 @@ class NeighborhoodRestaurants extends Component {
         fetcher({
             path: '/restaurants',
             method: 'GET',
-            token: brnchtkn,
+            // token: brnchtkn,
         })
         .then(restaurants => {
             this.setState({ restaurants: restaurants });

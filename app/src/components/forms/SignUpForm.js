@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SingleInput from './formComponents/SingleInput';
-import fetcher from '../../helpers/fetcher';
+import authService from '../../services/auth-service';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -12,7 +12,6 @@ class SignUpForm extends Component {
             password: '',
         };
         this.handleFormSignUp = this.handleFormSignUp.bind(this);
-        this.handleFormClear = this.handleFormClear.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -27,15 +26,10 @@ class SignUpForm extends Component {
         };
         console.log('to be sent to DB - formPayload', formPayload);
 
-        fetcher({
-            path: '/auth/signup',
-            method: 'POST',
-            body: formPayload,
-        })
-        .then(token => {
-            this.props.handleSignIn(token)
-            // this.handleFormClear(e)    //TODO: figure out what to do when signing doesn't work
-        });
+        authService.signup(formPayload)
+        .then(() => this.props.handleSignIn())
+        .then(()=> this.props.history.push('/dashboard'))
+        .catch(err => console.log(err));
     }
 
     handleFormClear(e) {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-// import fetcher from './helpers/fetcher';
 import Home from './components/home/Home';
 import Dashboard from './components/dashboard/Dashboard';
+import SignUpForm from './components/forms/SignUpForm';
 
 
 class App extends Component {
@@ -10,7 +10,6 @@ class App extends Component {
     super();
     this.state = {
       signedIn: false,
-      token: null
     };
     // this.hydrateAuth = this.hydrateAuth.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this)
@@ -51,21 +50,16 @@ class App extends Component {
   // }
 
   handleSignIn() {
-    console.log('handleSignIn called');
     if(localStorage.getItem('brnchtkn')) {
-      console.log('brnchtkn exists');
-      let storageToken = JSON.parse(localStorage.getItem('brnchtkn'));
-      console.log('storageToken: ', storageToken);
+      // let storageToken = JSON.parse(localStorage.getItem('brnchtkn'));
+      // console.log('this is storageToken: ', storageToken);
       this.setState({ signedIn: true });
     }
   }
 
   handleSignOut() {
     localStorage.removeItem('brnchtkn');
-    this.setState({
-      signedIn: false,
-      token: null,
-    });
+    this.setState({ signedIn: false });
   }
 
   // componentDidMount() {
@@ -77,7 +71,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path='/' render={props => (
+          <Route exact path='/' render={ props => (
             this.state.signedIn ? (
               <Redirect to={{
                 pathname: '/dashboard',
@@ -90,6 +84,8 @@ class App extends Component {
           
           <Route exact path='/dashboard' render={ props => <Dashboard token={this.state.token}/> } />
           <Route exact path='/signin' render={ props => <Home handleSignIn={this.handleSignIn} /> } />
+          <Route exact path='/signup' render={props => <SignUpForm {...props} handleSignIn={this.handleSignIn} /> } />
+
         </div>
       </Router>
     );
