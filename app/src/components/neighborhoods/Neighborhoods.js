@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetcher from '../../helpers/fetcher';
+import NeighborhoodService from '../../services/neighborhood-service';
 import QuadrantViewNav from './QuadrantViewNav';
 import NeighborhoodsView from './NeighborhoodsView';
 import NeighborhoodRestaurants from './NeighborhoodRestaurants';
@@ -15,29 +15,14 @@ class Neighborhoods extends Component {
             selectedQuadrant: 'View All',
             selectedView: [],
         };
-        this.fetchNeighborhoods = this.fetchNeighborhoods.bind(this);
         this.updateNeighborhoods = this.updateNeighborhoods.bind(this);
         this.updateView = this.updateView.bind(this);
     }
 
     componentDidMount() {
-        this.fetchNeighborhoods();
-    }
-
-    fetchNeighborhoods() {
-        console.log('inside fetchNeighborhoods');
-        const brnchtkn = localStorage.getItem('brnchtkn');
-        console.log('token from local storage: ', brnchtkn);
-        fetcher({
-            path: '/neighborhoods',
-            method: 'GET',
-            token: brnchtkn,
-        })
-        .then(neighborhoods => {
-            this.setState({ neighborhoods: neighborhoods });
-            this.updateView(this.state.selectedQuadrant);
-        });
-
+        NeighborhoodService.getAll()
+            .then(neighborhoods => this.setState({ neighborhoods }))
+            .then(() => this.updateView(this.state.selectedQuadrant));
     }
 
     updateNeighborhoods(neighborhood) {
@@ -64,8 +49,8 @@ class Neighborhoods extends Component {
             <div>
                 <QuadrantViewNav quadrants={this.state.quadrants} updateView={this.updateView}/>
                 <NeighborhoodsView selectedView={this.state.selectedView}/>
-                <NeighborhoodRestaurants />
                 <AddNeighborhoodForm quadrants={this.state.quadrants} updateNeighborhoods={this.updateNeighborhoods}/>
+                <NeighborhoodRestaurants />
             </div>
         );
     }
