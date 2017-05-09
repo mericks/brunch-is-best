@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import userService from '../../services/user-service';
+import UserService from '../../services/user-service';
 import Nav from './Nav';
 import Neighborhoods from '../neighborhoods/Neighborhoods';
 import Footer from '../Footer';
@@ -10,26 +10,18 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {},
+            user: {
+                name: { first: '' }
+            },
         };
-        this.fetchUser = this.fetchUser.bind(this);
     }
 
-    
     componentDidMount() {
-        console.log('inside Dashboard componentDidMount');
-        this.fetchUser();
-    }
+        UserService.getUser()
+        .then(user => this.setState({ user }))
+        .catch(err => console.log(err));
+    }    
 
-    fetchUser() {
-        console.log('inside fetchUser');
-        userService.getUser()
-        .then(user => {
-            console.log('this is user from fetchUser: ', user);
-            this.setState({ user });
-        }); 
-    }
-    
 
     render() {
         return (
