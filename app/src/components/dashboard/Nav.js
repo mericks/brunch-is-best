@@ -2,7 +2,7 @@ import React from 'react';
 
 const Nav = props => (
     <div>
-        <h1>Welcome {props.userFirstName}. This is the Nav/Header component.</h1>
+        <h3>NAV: Welcome {props.userFirstName}.</h3>
     </div>
 );
 
