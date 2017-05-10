@@ -6,7 +6,7 @@ const QuadrantViewNav = props => (
         <h4>View Neighborhoods by Quadrant</h4>
         <ul>
             {props.quadrants.map(quadrant =>
-            <li key={quadrant} onClick={() => props.updateView(quadrant)}>{quadrant}</li>
+            <li key={quadrant} onClick={() => props.updateQuadrantView(quadrant)}>{quadrant}</li>
             )}
         </ul>
         <hr />
