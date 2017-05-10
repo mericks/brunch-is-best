@@ -84,7 +84,7 @@ class App extends Component {
           
           <Route exact path='/dashboard' render={ props => <Dashboard token={this.state.token}/> } />
           <Route exact path='/signin' render={ props => <Home handleSignIn={this.handleSignIn} /> } />
-          <Route exact path='/signup' render={props => <SignUpForm {...props} handleSignIn={this.handleSignIn} /> } />
+          <Route exact path='/signup' render={ props => <SignUpForm {...props} handleSignIn={this.handleSignIn} /> } />
 
         </div>
       </Router>
