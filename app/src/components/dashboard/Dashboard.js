@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import UserService from '../../services/user-service';
 import Nav from './Nav';
-import Neighborhoods from '../neighborhoods/Neighborhoods';
+import Main from './Main';
+// import Neighborhoods from '../neighborhoods/Neighborhoods';
 import Footer from '../Footer';
 
 
@@ -27,7 +28,8 @@ class Dashboard extends Component {
         return (
             <div>
                 <Nav userFirstName={this.state.user.name.first} />
-                <Neighborhoods />
+                <Main />
+                {/*<Neighborhoods />*/}
                 <Footer />
             </div>
         )
