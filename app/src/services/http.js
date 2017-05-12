@@ -3,7 +3,6 @@ export default {
     
     setToken(tokenToSet) {
         this.token = tokenToSet;
-        // console.log('from http setToken: ', token);
     },
 
     clearToken() {
@@ -24,7 +23,7 @@ export default {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            method
+            method,
         };
 
         if(token) {
@@ -44,7 +43,8 @@ export default {
             })
             .then(res => {
                 return res.json();
-            });
+            })
+            .catch(err => console.log(err));
     }
 
 };
