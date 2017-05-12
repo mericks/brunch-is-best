@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import SingleInput from './formComponents/SingleInput';
 import Select from './formComponents/Select';
-import fetcher from '../../helpers/fetcher';
-
+import neighborhoodService from '../../services/neighborhood-service';
 
 class AddNeighborhoodForm extends Component {
     constructor(props) {
@@ -32,12 +31,8 @@ class AddNeighborhoodForm extends Component {
             quadrant: this.state.quadSelected,
         };
 
-        fetcher({
-            path: '/neighborhoods',
-            method: 'POST',
-            body: formPayload,
-        })
-        .then(neighborhood => this.props.updateNeighborhoods(neighborhood))
+        neighborhoodService.addNew(formPayload)
+        .then(neighborhood => this.props.addNeighborhood(neighborhood))
         .then(this.handleFormClear(e));
     }
 
