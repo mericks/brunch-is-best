@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import UserService from '../../services/user-service';
 import Nav from './Nav';
 import Main from './Main';
-// import Neighborhoods from '../neighborhoods/Neighborhoods';
 import Footer from '../Footer';
 
 
@@ -29,7 +28,6 @@ class Dashboard extends Component {
             <div>
                 <Nav userFirstName={this.state.user.name.first} />
                 <Main />
-                {/*<Neighborhoods />*/}
                 <Footer />
             </div>
         )
