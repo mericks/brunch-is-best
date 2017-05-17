@@ -74,16 +74,16 @@ class App extends Component {
           <Route exact path='/' render={ props => (
             this.state.signedIn ? (
               <Redirect to={{
-                pathname: '/dashboard',
+                pathname: '/neighborhoods',
                 state: { from: props.location },
               }} />
             ) : (
-              <Home handleSignIn={this.handleSignIn} />
+              <Home {...props} handleSignIn={this.handleSignIn} />
             )
           )} />
           
-          <Route exact path='/dashboard' render={ props => <Dashboard token={this.state.token}/> } />
-          <Route exact path='/signin' render={ props => <Home handleSignIn={this.handleSignIn} /> } />
+          <Route exact path='/neighborhoods' render={ props => <Dashboard {...props} token={this.state.token}/> } />
+          <Route exact path='/signin' render={ props => <Home {...props} handleSignIn={this.handleSignIn} /> } />
           <Route exact path='/signup' render={ props => <SignUpForm {...props} handleSignIn={this.handleSignIn} /> } />
 
         </div>
