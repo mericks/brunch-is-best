@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 
 const NeighborhoodsView = props => (
     <div>
-        <h3>Neighborhoods</h3>
+        <h3>Neighborhoods in the Selected Quadrant</h3>
         <ul>
-            {props.selectedView.map(neighborhood =>
-            <li key={neighborhood._id}><Link to={`/neighborhoods/${neighborhood.name}/restaurants`}>{neighborhood.name}</Link></li>
-            )}
+            {props.neighborhoodsInSelectedQuadrant.map(neighborhood =>
+            <li key={neighborhood._id} onClick={() => props.updateRestaurantsInNeighborhoodView(neighborhood)}><Link to={`/neighborhoods/${neighborhood.name}/restaurants`}>{neighborhood.name}</Link></li>
+            )} 
         </ul>
+
+        <Link to={'/neighborhoods/addneighborhood'}><button>Add a Neighborhood</button></Link>
     </div>
 );
 

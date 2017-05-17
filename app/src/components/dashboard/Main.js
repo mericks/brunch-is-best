@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 import neighborhoodService from '../../services/neighborhood-service';
 import restaurantService from '../../services/restaurant-service';
 import QuadrantViewNav from '../neighborhoods/QuadrantViewNav';
 import NeighborhoodsView from '../neighborhoods/NeighborhoodsView';
-// import NeighborhoodRestaurants from '../neighborhoods/NeighborhoodRestaurants';
 import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
 import RestaurantsInNeighborhood from '../restaurants/RestaurantsInNeighborhood';
 import AddRestaurantForm from '../forms/AddRestaurantForm';
@@ -88,24 +88,40 @@ class Main extends Component {
                 <QuadrantViewNav
                     quadrants={this.state.quadrants}
                     updateNeighborhoodsInQuadrantView={this.updateNeighborhoodsInQuadrantView}/>
-                <NeighborhoodsView
-                    neighborhoodsInSelectedQuadrant={this.state.neighborhoodsInSelectedQuadrant}
-                    updateRestaurantsInNeighborhoodView={this.updateRestaurantsInNeighborhoodView}  />
-                <AddNeighborhoodForm
-                    quadrants={this.state.quadrants}
-                    addNeighborhood={this.addNeighborhood}/>
-                <RestaurantsInNeighborhood
-                    restaurantsInSelectedNeighborhood={this.state.restaurantsInSelectedNeighborhood}
-                    updateSelectedRestaurant={this.updateSelectedRestaurant} />
-                <AddRestaurantForm
-                    selectedNeighborhood={this.state.selectedNeighborhood}
-                    neighborhoods={this.state.neighborhoods}
-                    addRestaurant={this.addRestaurant} />
-                <RestaurantView 
-                    selectedRestaurant={this.state.selectedRestaurant} />
+
+                <Switch>
+                    <Route exact path={'/neighborhoods'} render={ props => (
+                        <NeighborhoodsView {...props}
+                            neighborhoodsInSelectedQuadrant={this.state.neighborhoodsInSelectedQuadrant}
+                            updateRestaurantsInNeighborhoodView={this.updateRestaurantsInNeighborhoodView} />
+                    )} />
+                    <Route path={`/neighborhoods/${this.state.neighborhood.name}/restaurants`} render={ props => (
+                        <RestaurantsInNeighborhood {...props}
+                            restaurantsInSelectedNeighborhood={this.state.restaurantsInSelectedNeighborhood} />
+                    )} />
+                    <Route path={`neighborhoods/${this.state.neighborhood.name}/${this.state.restaurant.name}`} render={ props => (
+                        <RestaurantView {...props}
+                            selectedRestaurant={this.state.selectedRestaurant} />
+                    )} />
+                </Switch> 
+
+                <Route exact path={'/neighborhoods/addneighborhood'} render={ props => (
+                    <AddNeighborhoodForm
+                        quadrants={this.state.quadrants}
+                        addNeighborhood={this.addNeighborhood}/>
+                )} />
+
+                <Route exact path={'restaurants/addrestaurant'} render={ props => (
+                    <AddRestaurantForm
+                        selectedNeighborhood={this.state.selectedNeighborhood}
+                        neighborhoods={this.state.neighborhoods}
+                        addRestaurant={this.addRestaurant} />
+                )} />
+
             </div>
         );
     }
+    
 }
 
 export default Main;
