@@ -1,13 +1,13 @@
 import http from './http';
 
 export default {
-    // getAll() {
-    //     return http.fetch({
-    //         path: '/reviews',
-    //         method: 'GET',
-    //         token: http.token,
-    //     });
-    // },
+    getAllForRestaurant(restaurantID) {
+        return http.fetch({
+            path: `/reviews/${restaurantID}`,
+            method: 'GET',
+            token: http.token,
+        });
+    },
 
     addNew(formPayload) {
         return http.fetch({
