@@ -3,7 +3,7 @@ import http from './http';
 export default {
     getAllForRestaurant(restaurantID) {
         return http.fetch({
-            path: `/reviews/${restaurantID}`,
+            path: `/reviews/restaurant/${restaurantID}`,
             method: 'GET',
             token: http.token,
         });

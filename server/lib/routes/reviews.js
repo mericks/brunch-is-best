@@ -4,9 +4,11 @@ const Review = require('../models/review');
 
 router
 
-    .get('/', (req, res, next) => {
-        Review.find().lean()
-            .populate('restaurant reviewedBy')
+    .get('/restaurant/:id', (req, res, next) => {
+        const restaurantID = req.params.id;
+        Review.find({ restaurant: restaurantID }).lean()
+            // TODO: correct this populate to return first and last name - no hash 
+            .populate('reviewedBy.name.first reviewedBy.name.last')
             .then(reviews => res.send(reviews))
             .catch(next);
     })
