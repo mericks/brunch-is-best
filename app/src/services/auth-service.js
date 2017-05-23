@@ -6,6 +6,7 @@ function setToken(token) {
 }
 
 export default {
+
     verify(token) {
         return http.fetch({
             path: '/auth/verify',
@@ -34,10 +35,5 @@ export default {
         .then(({ token }) => setToken(token))
         .catch(err => console.log(err));
     }
-
-    // TODO: logout function
-    // logout() {
-
-    // }
-
+    
 };
