@@ -49,6 +49,7 @@ class App extends Component {
   handleSignOut() {
     localStorage.removeItem('brnchtkn');
     this.setState({ signedIn: false });
+    this.hydrateAuth();
   }
 
 
@@ -67,7 +68,7 @@ class App extends Component {
             )
           )} />
           
-          <Route exact path='/neighborhoods' render={ props => <Dashboard {...props} token={this.state.token}/> } />
+          <Route exact path='/neighborhoods' render={ props => <Dashboard {...props} handleSignOut={this.handleSignOut} /> } />
           <Route exact path='/signin' render={ props => <Home {...props} handleSignIn={this.handleSignIn} /> } />
           <Route exact path='/signup' render={ props => <SignUpForm {...props} handleSignIn={this.handleSignIn} /> } />
 
