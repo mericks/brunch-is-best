@@ -6,6 +6,16 @@ function setToken(token) {
 }
 
 export default {
+    verify(token) {
+        console.log('token from verify call: ', token);
+        return http.fetch({
+            path: '/auth/verify',
+            method: 'GET',
+            token,
+        })
+        .catch(err => console.log(err));
+    },
+
     signup(formPayload) {
         return http.fetch({
             path: '/auth/signup',
@@ -25,7 +35,6 @@ export default {
         .then(({ token }) => setToken(token))
         .catch(err => console.log(err));
     }
-
 
     // TODO: logout function
     // logout() {
