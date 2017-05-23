@@ -7,7 +7,6 @@ function setToken(token) {
 
 export default {
     verify(token) {
-        console.log('token from verify call: ', token);
         return http.fetch({
             path: '/auth/verify',
             method: 'GET',
