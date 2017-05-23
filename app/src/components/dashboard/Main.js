@@ -5,9 +5,9 @@ import neighborhoodService from '../../services/neighborhood-service';
 import restaurantService from '../../services/restaurant-service';
 import QuadrantViewNav from '../neighborhoods/QuadrantViewNav';
 import NeighborhoodsView from '../neighborhoods/NeighborhoodsView';
-import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
+// import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
 import RestaurantsInNeighborhood from '../restaurants/RestaurantsInNeighborhood';
-import AddRestaurantForm from '../forms/AddRestaurantForm';
+// import AddRestaurantForm from '../forms/AddRestaurantForm';
 import RestaurantView from '../restaurants/RestaurantView';
 
 
@@ -68,14 +68,12 @@ class Main extends Component {
     }
 
     updateRestaurantsInNeighborhoodView(neighborhood) {
-        console.log('passedinnabe from updateRestoinNabe: ', neighborhood);
-        console.log('restaurants from updateRestoinNabe: ', this.state.restaurants);
+        // TODO: Fix async issue on setState: updatedView is correct - restosInNabe not being set
         this.setState({ selectedNeighborhood: neighborhood });
         let updatedView = this.state.restaurants.filter(restaurant => {
             return restaurant.neighborhood.name === neighborhood.name
         })
         this.setState({ restaurantsInSelectedNeighborhood: updatedView });
-        console.log('restaurantsInSelectedNeighborhood: ', this.state.restaurantsInSelectedNeighborhood);
     }
 
     updateSelectedRestaurant(restaurant) {
@@ -85,39 +83,25 @@ class Main extends Component {
     render() {
         return (
             <div>
+
                 <QuadrantViewNav
                     quadrants={this.state.quadrants}
                     updateNeighborhoodsInQuadrantView={this.updateNeighborhoodsInQuadrantView}/>
-
-                <Switch>
+                {/*<Switch>*/}
                     <Route exact path={'/neighborhoods'} render={ props => (
                         <NeighborhoodsView {...props}
                             neighborhoodsInSelectedQuadrant={this.state.neighborhoodsInSelectedQuadrant}
                             updateRestaurantsInNeighborhoodView={this.updateRestaurantsInNeighborhoodView} />
                     )} />
-                    <Route path={`/neighborhoods/${this.state.neighborhood.name}/restaurants`} render={ props => (
+                    <Route exact path={`/neighborhoods/${this.state.selectedNeighborhood.name}/restaurants`} render={ props => (
                         <RestaurantsInNeighborhood {...props}
                             restaurantsInSelectedNeighborhood={this.state.restaurantsInSelectedNeighborhood} />
                     )} />
-                    <Route path={`neighborhoods/${this.state.neighborhood.name}/${this.state.restaurant.name}`} render={ props => (
+                    <Route exact path={`restaurants/${this.state.selectedRestaurant.name}`} render={ props => (
                         <RestaurantView {...props}
                             selectedRestaurant={this.state.selectedRestaurant} />
                     )} />
-                </Switch> 
-
-                <Route exact path={'/neighborhoods/addneighborhood'} render={ props => (
-                    <AddNeighborhoodForm
-                        quadrants={this.state.quadrants}
-                        addNeighborhood={this.addNeighborhood}/>
-                )} />
-
-                <Route exact path={'restaurants/addrestaurant'} render={ props => (
-                    <AddRestaurantForm
-                        selectedNeighborhood={this.state.selectedNeighborhood}
-                        neighborhoods={this.state.neighborhoods}
-                        addRestaurant={this.addRestaurant} />
-                )} />
-
+                {/*</Switch> */}
             </div>
         );
     }
