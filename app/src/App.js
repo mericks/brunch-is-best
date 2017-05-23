@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import authService from './services/auth-service';
+import http from './services/http';
 import Home from './components/home/Home';
 import Dashboard from './components/dashboard/Dashboard';
 import SignUpForm from './components/forms/SignUpForm';
@@ -11,48 +13,35 @@ class App extends Component {
     this.state = {
       signedIn: false,
     };
-    // this.hydrateAuth = this.hydrateAuth.bind(this);
+    this.hydrateAuth = this.hydrateAuth.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleSignOut = this.handleSignOut.bind(this);
   }
-  // TODO: resolve fail to authenticate issues
-  // hydrateAuth() {
 
-  //   console.log('hydrateAuth called');
+  componentDidMount() {
+    this.hydrateAuth();
+  }
 
-  //   if(localStorage.getItem('token')) {
-  //     console.log('token')
-  //     return 'token';
-  //   }
-
-
-  //   // const token = localStorage.getItem('token');
-  //   // console.log(token);
-
-  //   if(token) {
-  //     fetcher({
-  //       path: '/auth/verify',
-  //       method: 'GET',
-  //       token,
-  //     })
-  //     .then(res => {
-  //       if(res.valid) {
-  //         this.setState({
-  //           signedIn: true,
-  //           token,
-  //         });
-  //       } 
-  //     })
-  //     .catch(res => {
-  //       console.log('res error', res);
-  //     })
-  //   } 
-  // }
+  hydrateAuth() {
+    const token = JSON.parse(localStorage.getItem('brnchtkn'));
+    if(token) {
+      authService.verify(token)
+      .then(res => {
+        if (res.valid) {
+          http.setToken(token);
+          this.setState({ signedIn: true });
+        } else {
+          this.setState({ signedIn: false })
+        }
+      })  
+      .catch(err => {
+        console.log('res error', err);
+      });
+    } 
+  }
 
   handleSignIn() {
     if(localStorage.getItem('brnchtkn')) {
-      // let storageToken = JSON.parse(localStorage.getItem('brnchtkn'));
-      // console.log('this is storageToken: ', storageToken);
       this.setState({ signedIn: true });
     }
   }
@@ -61,10 +50,6 @@ class App extends Component {
     localStorage.removeItem('brnchtkn');
     this.setState({ signedIn: false });
   }
-
-  // componentDidMount() {
-  //   this.hydrateAuth();
-  // }
 
 
   render() {
