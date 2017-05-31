@@ -7,23 +7,33 @@ const app = require('../../lib/app');
 const request = chai.request(app);
 
 
-// Testing Data & Function
-let nabeTest1 = { name: 'nabeTest1', quadrant: 'NW' };
-let nabeTest2 = { name: 'nabeTest2', quadrant: 'SW'};
-let nabeTest3 = { name: 'nabeTest3', quadrant: 'N'};
-
-function saveNabe(nabe) {
-    return request.post('/api/neighborhoods')
-        .send(nabe)
-        .then(res => res.body);
-}  
-// End Testing Data & Function
-
-
 describe('Neighborhood API Route Tests', () => {
 
+    const nabeUser = { name: { first: 'nabe', last: 'user' }, email: 'nabe@test.com', password: 'pword' };
+    let token = '';
+
+    before(() => {
+        return request.post('/api/auth/signup')
+            .send(nabeUser)
+            .then(res => {
+                token = res.body.token;
+            });
+    });
+
+    let nabeTest1 = { name: 'nabeTest1', quadrant: 'NW' };
+    let nabeTest2 = { name: 'nabeTest2', quadrant: 'SW'};
+    let nabeTest3 = { name: 'nabeTest3', quadrant: 'N'};
+
+    function saveNabe(nabe) {
+        return request.post('/api/neighborhoods')
+            .send(nabe)
+            .set('Authorization', token)
+            .then(res => res.body);
+    }  
+    
     it('GET /neighborhoods - Returns empty array', () => {
         return request.get('/api/neighborhoods')
+            .set('Authorization', token)
             .then(res => res.body)
             .then(neighborhoods => assert.deepEqual(neighborhoods, []));
     });
@@ -31,6 +41,7 @@ describe('Neighborhood API Route Tests', () => {
     it('POST /neighborhoods - Adds neighborhood per Neighborhood Schema', () => {
         return request.post('/api/neighborhoods')
             .send(nabeTest1)
+            .set('Authorization', token)
             .then(res => res.body)
             .then(savedNabe => {
                 assert.ok(savedNabe._id);
@@ -42,6 +53,7 @@ describe('Neighborhood API Route Tests', () => {
 
     it('GET /neighborhoods - Returns nabeTest1', () => {
         return request.get('/api/neighborhoods')
+            .set('Authorization', token)
             .then(res => res.body)
             .then(neighborhoods => {
                 assert.equal(neighborhoods[0]._id, nabeTest1._id);
@@ -55,12 +67,14 @@ describe('Neighborhood API Route Tests', () => {
         saveNabe(nabeTest2);
         saveNabe(nabeTest3);
         return request.get('/api/neighborhoods')
+            .set('Authorization', token)
             .then(res => res.body)
             .then(neighborhoods => assert.equal(neighborhoods.length, 3));
     });
 
     it('GET /neighborhoods/:id - Returns neighborhood by ID', () => {
         return request.get(`/api/neighborhoods/${nabeTest1._id}`)
+            .set('Authorization', token)
             .then(res => res.body)
             .then(neighborhood => assert.equal(neighborhood.name, nabeTest1.name));
     });
