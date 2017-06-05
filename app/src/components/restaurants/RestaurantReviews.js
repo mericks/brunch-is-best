@@ -11,7 +11,7 @@ const RestaurantReviews = props => {
                 <p>{props.review.comment}</p>
             </div>
         );
-    }
+    })
 }
 
 export default RestaurantReviews;

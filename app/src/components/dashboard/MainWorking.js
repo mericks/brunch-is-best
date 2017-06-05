@@ -5,9 +5,9 @@ import neighborhoodService from '../../services/neighborhood-service';
 import restaurantService from '../../services/restaurant-service';
 import QuadrantViewNav from '../neighborhoods/QuadrantViewNav';
 import NeighborhoodsView from '../neighborhoods/NeighborhoodsView';
-// import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
+import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
 import RestaurantsInNeighborhood from '../restaurants/RestaurantsInNeighborhood';
-// import AddRestaurantForm from '../forms/AddRestaurantForm';
+import AddRestaurantForm from '../forms/AddRestaurantForm';
 import RestaurantView from '../restaurants/RestaurantView';
 
 
@@ -81,27 +81,46 @@ class Main extends Component {
     }
 
     render() {
+        const { match } = this.props //////destructuring
         return (
             <div>
-
                 <QuadrantViewNav
                     quadrants={this.state.quadrants}
                     updateNeighborhoodsInQuadrantView={this.updateNeighborhoodsInQuadrantView}/>
+
                 {/*<Switch>*/}
-                    <Route exact path={'/neighborhoods'} render={ props => (
-                        <NeighborhoodsView {...props}
+                    <Route path={match.url} render={ props => (
+                        <NeighborhoodsView {...this.props}
                             neighborhoodsInSelectedQuadrant={this.state.neighborhoodsInSelectedQuadrant}
                             updateRestaurantsInNeighborhoodView={this.updateRestaurantsInNeighborhoodView} />
                     )} />
-                    <Route exact path={`/neighborhoods/${this.state.selectedNeighborhood.name}/restaurants`} render={ props => (
+
+                    <Route exact path={`${match.url}/:neighborhoodName/restaurants`} render={ props => (
                         <RestaurantsInNeighborhood {...props}
                             restaurantsInSelectedNeighborhood={this.state.restaurantsInSelectedNeighborhood} />
                     )} />
-                    <Route exact path={`restaurants/${this.state.selectedRestaurant.name}`} render={ props => (
-                        <RestaurantView {...props}
+
+                    <Route exact path={`/restaurants/:restaurantName`} render={ props => (
+                        <RestaurantView
                             selectedRestaurant={this.state.selectedRestaurant} />
                     )} />
                 {/*</Switch> */}
+
+                <Route exact path={`${match.url}/addneighborhood`} render={ props => (
+                    <AddNeighborhoodForm {...this.props}
+                        quadrants={this.state.quadrants}
+                        addNeighborhood={this.addNeighborhood}/>
+                )} />
+                <Route exact path={'restaurants/addrestaurant'} render={ props => (
+                    <AddRestaurantForm 
+                        selectedNeighborhood={this.state.selectedNeighborhood}
+                        neighborhoods={this.state.neighborhoods}
+                        addRestaurant={this.addRestaurant} />
+                )} />
+
+
+
+
             </div>
         );
     }
