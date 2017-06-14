@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import authService from './services/auth-service';
+import UserService from './services/user-service';
 import http from './services/http';
-import Home from './components/home/Home';
-import Dashboard from './components/dashboard/Dashboard';
-import SignUpForm from './components/forms/SignUpForm';
+import Header from './components/Header';
+import Body from './components/Body';
+import Footer from './components/Footer';
+
 
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       signedIn: false,
+      user: { name: { first: ''} },
     };
     this.hydrateAuth = this.hydrateAuth.bind(this);
+    this.hydrateUser = this.hydrateUser.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleSignOut = this.handleSignOut.bind(this);
   }
@@ -30,6 +34,7 @@ class App extends Component {
         if (res.valid) {
           http.setToken(token);
           this.setState({ signedIn: true });
+          this.hydrateUser();
         } else {
           this.setState({ signedIn: false })
         }
@@ -40,38 +45,35 @@ class App extends Component {
     } 
   }
 
+  hydrateUser() {
+      UserService.getUser()
+      .then(user => this.setState({ user }))
+      .catch(err => console.log(err));
+  }
+
   handleSignIn() {
     if(localStorage.getItem('brnchtkn')) {
-      this.setState({ signedIn: true });
+      this.hydrateUser()
+      .then(this.setState({ signedIn: true }));
     }
   }
 
   handleSignOut() {
     localStorage.removeItem('brnchtkn');
     this.setState({ signedIn: false });
-    this.hydrateAuth();
+    this.hydrateAuth();  // use router location object to navigate to '/'  history.push(location) - see docs
   }
+
+
 
 
   render() {
     return (
       <Router>
         <div>
-          <Route exact path='/' render={ props => (
-            this.state.signedIn ? (
-              <Redirect to={{
-                pathname: '/neighborhoods',
-                state: { from: props.location },
-              }} />
-            ) : (
-              <Home {...props} handleSignIn={this.handleSignIn} />
-            )
-          )} />
-          
-          <Route exact path='/neighborhoods' render={ props => <Dashboard {...props} handleSignOut={this.handleSignOut} /> } />
-          <Route exact path='/signin' render={ props => <Home {...props} handleSignIn={this.handleSignIn} /> } />
-          <Route exact path='/signup' render={ props => <SignUpForm {...props} handleSignIn={this.handleSignIn} /> } />
-
+          <Header signedIn={this.state.signedIn} userFirstName={this.state.user.name.first} handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} />
+          <Body signedIn={this.state.signedIn} handleSignIn={this.handleSignIn} />
+          <Footer />
         </div>
       </Router>
     );
