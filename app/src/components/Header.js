@@ -1,6 +1,7 @@
 import React from 'react';
 import SignInForm from './forms/SignInForm';
 
+
 const Header = props => (
     props.signedIn ? (
         <div>
