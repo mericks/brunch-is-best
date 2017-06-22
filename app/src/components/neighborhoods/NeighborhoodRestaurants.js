@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NeighborhoodRestaurants = props => {
-    if (props.restaurantsInSelectedNeighborhood.length === 0) {
+    if (props.neighborhoodRestaurants.length === 0) {
         return (
             <div>
                 <h3>Restaurants in the selected Neighborhood</h3>
@@ -16,7 +16,8 @@ const NeighborhoodRestaurants = props => {
                 <h3>Restaurants in the selected Neighborhood</h3>
                 <ul>
                     {props.neighborhoodRestaurants.map(restaurant =>
-                    <li key={restaurant._id} onClick={() => props.updateSelectedRestaurant(restaurant)}><Link to={`restaurants/${restaurant.name}`}>{restaurant.name}</Link></li>
+                    <li key={restaurant._id} onClick={() => props.updateSelectedRestaurant(restaurant)}>
+                        <Link to={`/restaurants/${restaurant._id}`}>{restaurant.name}</Link></li>
                     )}
                 </ul>
 
