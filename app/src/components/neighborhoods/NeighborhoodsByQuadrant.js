@@ -7,7 +7,8 @@ const NeighborhoodsByQuadrant = props => (
         <h3>Neighborhoods in the Selected Quadrant</h3>
         <ul>
             {props.neighborhoodsInSelectedQuadrant.map(neighborhood =>
-            <li key={neighborhood._id} onClick={() => props.updateNeighborhoodRestaurantsView(neighborhood)}><Link to={`/neighborhoods/${neighborhood.name}/restaurants`}>{neighborhood.name}</Link></li>
+            <li key={neighborhood._id} onClick={() => props.updateNeighborhoodRestaurantsView(neighborhood)}>
+                <Link to={`/neighborhoods/${neighborhood._id}/restaurants`}>{neighborhood.name}</Link></li>
             )} 
         </ul>
 
