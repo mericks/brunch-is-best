@@ -1,65 +1,17 @@
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import UserService from '../../services/user-service';
-import Nav from './Nav';
-import Neighborhoods from '../neighborhoods/Neighborhoods';
-import Restaurants from '../restaurants/Restaurants';
-// import Main from './Main';
-// import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
-// import AddRestaurantForm from '../forms/AddRestaurantForm';
-import Footer from '../Footer';
+import React from 'react';
 
-
-
-class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: {
-                name: { first: '' }
-            },
-            
-            selectedRestaurant: '',
-        };
-    }
-
-    componentDidMount() {
-        UserService.getUser()
-        .then(user => this.setState({ user }))
-        .catch(err => console.log(err));
-    }
-
-    updateSelectedRestaurant(restaurant) {
-        this.setState({ selectedRestaurant: restaurant });
-
-    }   
-
-
-    render() {
-        const { match } = this.props;
-        return (
-            <div>
-                <Nav userFirstName={this.state.user.name.first} handleSignOut={this.props.handleSignOut} />
-                <main>
-                    <Switch>
-
-                        <Route path={match.url} render={ props => (
-                            <Neighborhoods {...this.props}
-                            updateSelectedRestaurant={this.updateSelectedRestaurant} />
-                        )} />
-                        
-                        <Route path='/restaurants' render={ props => (
-                            <Restaurants {...this.props}
-                            selectedRestaurant={this.state.selectedRestaurant} />
-                        )} />
-                        
-                    </Switch>
-                </main>
-                <Footer />
-            </div>
-        )
-    }
-
-}
+const Dashboard = props => (
+    <div>
+        <h3>DASHBOARD</h3>
+        <p>Vision for this component is that will include information like:</p>
+        <ul>
+            <li>Profile information</li>
+            <li>List of / Links to Friends Profile</li>
+            <li>Recommended spots within geo proximity</li>
+            <li>Latest addtiions: restaurants, reviews, checkins, etc.</li>
+            <li>Summary of your visited restaurants, ranked in order of preference</li>
+        </ul>
+    </div>
+);
 
 export default Dashboard;
