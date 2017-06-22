@@ -54,7 +54,7 @@ class App extends Component {
   handleSignIn() {
     if(localStorage.getItem('brnchtkn')) {
       this.hydrateUser()
-      .then(this.setState({ signedIn: true }));
+      this.setState({ signedIn: true });
     }
   }
 
