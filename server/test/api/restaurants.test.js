@@ -22,13 +22,18 @@ describe.only('Restaurants API Route Tests', () => {
                 token = res.body.token;
             })
             .then(() => {
+                return request.get('/api/user')
+                    .set('Authorization', token)
+                    .then(res => res.body)
+                    .then(user => restoUserID = user._id);
+            })
+            .then(() => {
                 return request.post('/api/neighborhoods')
                     .send({ name: 'restoNabe', quadrant: 'SW' })
                     .set('Authorization', token)
                     .then(res => res.body)
                     .then(savedNabe => {
                         restoNabeID = savedNabe._id;
-                        restoUserID = savedNabe.createdBy;
                     });
             });
     });
@@ -74,7 +79,6 @@ describe.only('Restaurants API Route Tests', () => {
                 assert.equal(savedResto.address.city, restoTest1.address.city);
                 assert.equal(savedResto.address.zip, restoTest1.address.zip);
                 assert.equal(savedResto.createdBy, restoUserID);
-                // assert.equal(savedResto.createdBy, restoTest1.createdBy);
             });
     });
 
