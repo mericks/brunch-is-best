@@ -9,14 +9,17 @@ class RestaurantDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            restaurant: {},
             reviews: [],
         };
         this.addReview = this.addReview.bind(this);
-        this.deleteRestaurant = this.deleteRestaurant.bdin(this);
+        this.deleteRestaurant = this.deleteRestaurant.bind(this);
     }
 
     componentDidMount() {
-        reviewService.getAllForRestaurant(this.props.selectedRestaurant._id)
+        restaurantService.getRestaurant(this.props.RestaurantID)
+            .then(restaurant => this.setState({ restaurant }))
+        reviewService.getAllForRestaurant(this.props.RestaurantID)
             .then(reviews => this.setState({ reviews }))
     }
 
@@ -27,19 +30,17 @@ class RestaurantDetail extends Component {
     }
 
     deleteRestaurant() {
-        restaurantService.delete(this.props.selectedRestaurant._id)
+        restaurantService.delete(this.state.restaurant._id)
     }
 
     
     render() {
         return (
             <div>
-                <h5>This is the RestaurantDetail componentt</h5>
-
-                <h3>{this.props.selectedRestaurant.name}</h3>
-                <p>{this.props.selectedRestaurant.address.street}</p>
-                <p>{this.props.selectedRestaurant.address.city}</p>
-                <p>{this.props.selectedRestaurant.address.zip}</p>
+                <h3>{this.state.restaurant.name}</h3>
+                <p>{this.state.restaurant.address.street}</p>
+                <p>{this.state.restaurant.address.city}</p>
+                <p>{this.state.restaurant.address.zip}</p>
 
                 <RestaurantReviews reviews={this.state.reviews}/>
                 <AddReviewForm selectedRestaurant={this.props.selectedRestaurant} addReview={this.addReview}/>
