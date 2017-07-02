@@ -32,17 +32,6 @@ class SignUpForm extends Component {
         .catch(err => console.log(err));
     }
 
-    handleFormClear(e) {
-        e.preventDefault();
-
-        this.setState({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: ''
-        })
-    }
-
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }

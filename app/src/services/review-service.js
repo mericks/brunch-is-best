@@ -1,9 +1,9 @@
 import http from './http';
 
 export default {
-    getAll() {
+    getAllForRestaurant(restaurantID) {
         return http.fetch({
-            path: '/neighborhoods',
+            path: `/reviews/restaurant/${restaurantID}`,
             method: 'GET',
             token: http.token,
         });
@@ -11,7 +11,7 @@ export default {
 
     addNew(formPayload) {
         return http.fetch({
-            path: '/neighborhoods',
+            path: '/reviews',
             method: 'POST',
             token: http.token,
             body: formPayload,

@@ -1,39 +1,17 @@
-import React, { Component } from 'react';
-// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import UserService from '../../services/user-service';
-import Nav from './Nav';
-import Neighborhoods from '../neighborhoods/Neighborhoods';
-import Footer from '../Footer';
+import React from 'react';
 
-
-class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: {
-                name: { first: '' }
-            },
-        };
-    }
-
-    componentDidMount() {
-        UserService.getUser()
-        .then(user => this.setState({ user }))
-        .catch(err => console.log(err));
-    }    
-
-
-    render() {
-        return (
-            <div>
-                <Nav userFirstName={this.state.user.name.first} />
-                <Neighborhoods />
-                <Footer />
-            </div>
-        )
-    }
-
-}
+const Dashboard = props => (
+    <div>
+        <h3>DASHBOARD</h3>
+        <p>Vision for this component is that will include information like:</p>
+        <ul>
+            <li>Profile information</li>
+            <li>List of / Links to Friends Profile</li>
+            <li>Recommended spots within geo proximity</li>
+            <li>Latest addtiions: restaurants, reviews, checkins, etc.</li>
+            <li>Summary of your visited restaurants, ranked in order of preference</li>
+        </ul>
+    </div>
+);
 
 export default Dashboard;
- 

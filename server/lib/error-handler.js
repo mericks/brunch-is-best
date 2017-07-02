@@ -1,22 +1,27 @@
-module.exports = function getErrorHandler() {
-    return function errorHandler(err, req, res, next) {
-        let code = 500, error = 'Internal Server Error';
-        
-        if(err.name === 'ValidationError' || err.name === 'CastError') {
-            code = 400;
-            error = err.errors.name.message;
-        }
+//eslint-disable-next-line no-console
+function getErrorHandler(log = console.log) {
 
-        else if (err.code) {
+    // eslint-disable-next-line no-unused-vars    
+    return function errorHandler(err, req, res, next) { 
+        let code, error;
+
+        if (err.name === 'ValidationError') {
+            code = 400;
+            error = Object.values(err.errors).map(v => v.message);
+        }
+        else if(err.code) {
             code = err.code;
             error = err.error;
-            console.log(err.code, err.error);
         }
-
         else {
-            console.log(err);
+            code = 500;
+            error = 'Internal Server Error';
+            log(err);
         }
 
+        log('code: ', code, error);
         res.status(code).send({ error });
-    };
-};
+    };  
+}
+
+module.exports = getErrorHandler;

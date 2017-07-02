@@ -1,58 +1,59 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import Home from './components/home/Home';
-import Dashboard from './components/dashboard/Dashboard';
-import SignUpForm from './components/forms/SignUpForm';
+import { BrowserRouter as Router } from 'react-router-dom';
+import authService from './services/auth-service';
+import UserService from './services/user-service';
+import http from './services/http';
+import Header from './components/Header';
+import Body from './components/Body';
+import Footer from './components/Footer';
+
 
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       signedIn: false,
+      user: { name: { first: ''} },
     };
-    // this.hydrateAuth = this.hydrateAuth.bind(this);
+    this.hydrateAuth = this.hydrateAuth.bind(this);
+    this.hydrateUser = this.hydrateUser.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleSignOut = this.handleSignOut.bind(this);
   }
-  // TODO: resolve fail to authenticate issues
-  // hydrateAuth() {
 
-  //   console.log('hydrateAuth called');
+  componentDidMount() {
+    this.hydrateAuth();
+  }
 
-  //   if(localStorage.getItem('token')) {
-  //     console.log('token')
-  //     return 'token';
-  //   }
+  hydrateAuth() {
+    const token = JSON.parse(localStorage.getItem('brnchtkn'));
+    if(token) {
+      authService.verify(token)
+      .then(res => {
+        if (res.valid) {
+          http.setToken(token);
+          this.setState({ signedIn: true });
+          this.hydrateUser();
+        } else {
+          this.setState({ signedIn: false })
+        }
+      })  
+      .catch(err => {
+        console.log('res error', err);
+      });
+    } 
+  }
 
-
-  //   // const token = localStorage.getItem('token');
-  //   // console.log(token);
-
-  //   if(token) {
-  //     fetcher({
-  //       path: '/auth/verify',
-  //       method: 'GET',
-  //       token,
-  //     })
-  //     .then(res => {
-  //       if(res.valid) {
-  //         this.setState({
-  //           signedIn: true,
-  //           token,
-  //         });
-  //       } 
-  //     })
-  //     .catch(res => {
-  //       console.log('res error', res);
-  //     })
-  //   } 
-  // }
+  hydrateUser() {
+      UserService.getUser()
+      .then(user => this.setState({ user }))
+      .catch(err => console.log(err));
+  }
 
   handleSignIn() {
     if(localStorage.getItem('brnchtkn')) {
-      // let storageToken = JSON.parse(localStorage.getItem('brnchtkn'));
-      // console.log('this is storageToken: ', storageToken);
+      this.hydrateUser()
       this.setState({ signedIn: true });
     }
   }
@@ -60,32 +61,19 @@ class App extends Component {
   handleSignOut() {
     localStorage.removeItem('brnchtkn');
     this.setState({ signedIn: false });
+    this.hydrateAuth();  // use router location object to navigate to '/'  history.push(location) - see docs
   }
 
-  // componentDidMount() {
-  //   this.hydrateAuth();
-  // }
+
 
 
   render() {
     return (
       <Router>
         <div>
-          <Route exact path='/' render={ props => (
-            this.state.signedIn ? (
-              <Redirect to={{
-                pathname: '/dashboard',
-                state: { from: props.location },
-              }} />
-            ) : (
-              <Home handleSignIn={this.handleSignIn} />
-            )
-          )} />
-          
-          <Route exact path='/dashboard' render={ props => <Dashboard token={this.state.token}/> } />
-          <Route exact path='/signin' render={ props => <Home handleSignIn={this.handleSignIn} /> } />
-          <Route exact path='/signup' render={props => <SignUpForm {...props} handleSignIn={this.handleSignIn} /> } />
-
+          <Header signedIn={this.state.signedIn} userFirstName={this.state.user.name.first} handleSignIn={this.handleSignIn} handleSignOut={this.handleSignOut} />
+          <Body signedIn={this.state.signedIn} handleSignIn={this.handleSignIn} />
+          <Footer />
         </div>
       </Router>
     );

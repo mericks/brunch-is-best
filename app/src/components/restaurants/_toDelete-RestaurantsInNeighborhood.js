@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NeighborhoodRestaurants = props => {
-    if (props.neighborhoodRestaurants.length === 0) {
+const RestaurantsInNeighborhood = props => {
+    console.log('length of resto array: ', props.restaurantsInSelectedNeighborhood.length);
+    if (props.restaurantsInSelectedNeighborhood.length === 0) {
         return (
             <div>
                 <h3>Restaurants in the selected Neighborhood</h3>
@@ -15,10 +16,8 @@ const NeighborhoodRestaurants = props => {
             <div>
                 <h3>Restaurants in the selected Neighborhood</h3>
                 <ul>
-                    {props.neighborhoodRestaurants.map(restaurant =>
-                    <li key={restaurant._id}>
-                        <Link to={`/restaurants/${restaurant._id}`}>{restaurant.name}</Link>
-                    </li>
+                    {props.restaurantsInSelectedNeighborhood.map(restaurant =>
+                    <li key={restaurant._id} onClick={() => props.updateSelectedRestaurant(restaurant)}><Link to={`restaurants/${restaurant.name}`}>{restaurant.name}</Link></li>
                     )}
                 </ul>
 
@@ -28,16 +27,16 @@ const NeighborhoodRestaurants = props => {
     }
 } 
 
-export default NeighborhoodRestaurants;
+export default RestaurantsInNeighborhood;
 
 
 
 
 
 
-/*const NeighborhoodRestaurants = props => (
+/*const RestaurantsInNeighborhood = props => (
     <div>
-        <h3>These are the restaurants in the selected Neighborhood: NeighborhoodRestaurants</h3>
+        <h3>These are the restaurants in the selected Neighborhood: RestaurantsInNeighborhood</h3>
         <ul>
             {props.restaurantsInSelectedNeighborhood.map(restaurant =>
             <li key={restaurant._id} onClick={() => props.updateSelectedRestaurant(restaurant)}><Link to={`restaurants/${restaurant.name}`}>{restaurant.name}</Link></li>
@@ -48,4 +47,4 @@ export default NeighborhoodRestaurants;
     </div>
 );
 
-export default NeighborhoodRestaurants;*/
+export default RestaurantsInNeighborhood;*/
