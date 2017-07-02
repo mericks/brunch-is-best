@@ -10,7 +10,7 @@ const Restaurants = props => {
             <Route exact path={`${match.url}/:restaurantID`} render={ props => {
                 return (
                     <RestaurantDetail {...props}
-                        selectedRestaurant={props.match.params.restaurantID} />
+                        selectedRestaurantID={props.match.params.restaurantID} />
                 )
             }} />
         </div>
