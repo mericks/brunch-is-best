@@ -16,8 +16,9 @@ const NeighborhoodRestaurants = props => {
                 <h3>Restaurants in the selected Neighborhood</h3>
                 <ul>
                     {props.neighborhoodRestaurants.map(restaurant =>
-                    <li key={restaurant._id} onClick={() => props.updateSelectedRestaurant(restaurant)}>
-                        <Link to={`/restaurants/${restaurant._id}`}>{restaurant.name}</Link></li>
+                    <li key={restaurant._id}>
+                        <Link to={`/restaurants/${restaurant._id}`}>{restaurant.name}</Link>
+                    </li>
                     )}
                 </ul>
 
