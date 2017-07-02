@@ -12,8 +12,9 @@ describe.only('Restaurants API Route Tests', () => {
 
     const restoUser = { name: { first: 'resto', last: 'user' }, email: 'resto@test.com', password: 'pword' };
     let token = '';
-    let restoNabeID = '';
     let restoUserID = '';
+    let restoNabe = {};
+    let restoTest1Saved = {};
 
     before(() => {
         return request.post('/api/auth/signup')
@@ -32,9 +33,7 @@ describe.only('Restaurants API Route Tests', () => {
                     .send({ name: 'restoNabe', quadrant: 'SW' })
                     .set('Authorization', token)
                     .then(res => res.body)
-                    .then(savedNabe => {
-                        restoNabeID = savedNabe._id;
-                    });
+                    .then(savedNabe => restoNabe = savedNabe);
             });
     });
 
@@ -46,7 +45,7 @@ describe.only('Restaurants API Route Tests', () => {
     // }  
  
 
-    it('GET /restaurants returns an empty array', () => {
+    it('GET /restaurants - returns an empty array', () => {
         return request.get('/api/restaurants')
             .set('Authorization', token)
             .then(res => res.body)
@@ -57,7 +56,7 @@ describe.only('Restaurants API Route Tests', () => {
 
         let restoTest1 = {
             name: 'restoTest1',
-            neighborhood: restoNabeID,
+            neighborhood: restoNabe._id,
             address: {
                 street: 'restoTest1Street',
                 city: 'restoTest1City',
@@ -70,7 +69,7 @@ describe.only('Restaurants API Route Tests', () => {
             .set('Authorization', token)
             .then(res => res.body)
             .then(savedResto => {
-                console.log('savedResto: ', savedResto);
+                restoTest1Saved = savedResto;
                 assert.ok(savedResto._id);
                 restoTest1._id = savedResto._id;
                 assert.equal(savedResto.name, restoTest1.name);
@@ -82,5 +81,28 @@ describe.only('Restaurants API Route Tests', () => {
             });
     });
 
+    it('GET /restaurants/abbrv - returns array of restaurants with id, name, and neighborhood', () => {
+        return request.get('/api/restaurants/abbrv')
+            .set('Authorization', token)
+            .then(res => res.body)
+            .then(restaurantsAbbrv => {
+                console.log('restaurantsAbbrv: ', restaurantsAbbrv);
+                console.log('restoTest1Saved: ', restoTest1Saved);
+                assert.equal(restaurantsAbbrv, [ { _id: restoTest1Saved._id, name: 'restoTest1', neighborhood: restoNabe } ]);
+            });
+    });
+
+
+
+    it.only('GET /restaurants/:id - returns all restaurant details', () => {
+        return request.get(`/api/restaurants/${restoTest1Saved._id}`)
+            .set('Authorization', token)
+            .then(res => res.body)
+            .then(restaurant => {
+                console.log('restaurant from get/id: ', restaurant);
+                console.log('restoTest1Saved: ', restoTest1Saved);
+                // assert.deepEqual(restaurant, restoTest1Saved);
+            });
+    });
 
 });
