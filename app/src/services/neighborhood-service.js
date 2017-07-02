@@ -10,7 +10,6 @@ export default {
     },
 
     addNew(formPayload) {
-        console.log('inside addNew fn in nabe-svc');
         return http.fetch({
             path: '/neighborhoods',
             method: 'POST',
