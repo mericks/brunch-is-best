@@ -12,6 +12,14 @@ router
             .catch(next);
     })
 
+    .get('/abbrv', (req, res, next) => {
+        Restaurant.find().lean()
+            .populate('neighborhood')
+            .select('name neighborhood')
+            .then(restaurantsAbbrv => res.send(restaurantsAbbrv))
+            .catch(next);
+    })
+
     .get('/:id', (req, res, next) => {
         Restaurant.findById(req.params.id).lean()
             .populate('address createdBy')
