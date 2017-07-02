@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+// import { Route, Switch } from 'react-router-dom';
 import neighborhoodService from '../../services/neighborhood-service';
 import restaurantService from '../../services/restaurant-service';
 import QuadrantViewNav from '../neighborhoods/QuadrantViewNav';
 import NeighborhoodsByQuadrant from '../neighborhoods/NeighborhoodsByQuadrant';
 import NeighborhoodRestaurants from '../neighborhoods/NeighborhoodRestaurants';
 import AddNeighborhoodForm from '../forms/AddNeighborhoodForm';
+
 
 
 class Neighborhoods extends Component {
@@ -20,14 +22,12 @@ class Neighborhoods extends Component {
             selectedNeighborhood: {},
             neighborhoodRestaurants: [],
 
-            restaurants: [],
-            // selectedRestaurant: {},
+            restaurantsAbbrv: [],
         };
         this.addNeighborhood = this.addNeighborhood.bind(this);
         this.updateNeighborhoodsInQuadrantView = this.updateNeighborhoodsInQuadrantView.bind(this);
         this.updateNeighborhoodRestaurantsView = this.updateNeighborhoodRestaurantsView.bind(this);
-        this.addRestaurant = this.addRestaurant.bind(this);
-        // this.updateSelectedRestaurant = this.updateSelectedRestaurant.bind(this);
+        // this.addRestaurant = this.addRestaurant.bind(this);
         
     }
 
@@ -35,8 +35,9 @@ class Neighborhoods extends Component {
         neighborhoodService.getAll()
             .then(neighborhoods => this.setState({ neighborhoods }))
             .then(() => this.updateNeighborhoodsInQuadrantView(this.state.selectedQuadrant));
-        restaurantService.getAll()
-            .then(restaurants => this.setState({ restaurants }));
+        restaurantService.getAbbrv()
+            .then(restaurantsAbbrv => this.setState({ restaurantsAbbrv }));
+        console.log('inside compdimnt restaurnatsAbbrv: ', this.state.restaurantsAbbrv);
     }
 
     addNeighborhood(neighborhood) {
@@ -45,11 +46,11 @@ class Neighborhoods extends Component {
         this.setState({ neighborhoods: updatedNeighborhoods });
     }
 
-    addRestaurant(restaurant) {
-        let initialRestaurants = this.state.restaurants;
-        let updatedRestaurants = [ ...initialRestaurants, restaurant];
-        this.setState({ restaurants: updatedRestaurants });
-    }
+    // addRestaurant(restaurant) {
+    //     let initialRestaurantNames = this.state.restaurantNames;
+    //     let updatedRestaurantNames = [ ...initialRestaurantNames, restaurantNames];
+    //     this.setState({ restaurantNames: updatedRestaurantNames });
+    // }
 
     updateNeighborhoodsInQuadrantView(quadrant) {
         this.setState({ selectedQuadrant: quadrant });
@@ -64,21 +65,12 @@ class Neighborhoods extends Component {
     }
 
     updateNeighborhoodRestaurantsView(neighborhood) {
-        // TODO: Fix async issue on setState: updatedView is correct - restosInNabe not being set
         this.setState({ selectedNeighborhood: neighborhood });
-        // Is this the best approach?
-        let updatedView = this.state.restaurants.filter(restaurant => {
+        let updatedView = this.state.restaurantsAbbrv.filter(restaurant => {
             return restaurant.neighborhood.name === neighborhood.name
         })
         this.setState({ neighborhoodRestaurants: updatedView });
     }
-
-
-    // updateSelectedRestaurant(restaurant) {
-    //     this.setState({ selectedRestaurant: restaurant});
-    // }
-
-
 
 
     render() {
@@ -89,28 +81,22 @@ class Neighborhoods extends Component {
                     quadrants={this.state.quadrants}
                     updateNeighborhoodsInQuadrantView={this.updateNeighborhoodsInQuadrantView}/>
 
-                {/*<Switch>*/}
+                <Route exact path={match.url} render={ props => (
+                    <NeighborhoodsByQuadrant {...this.props}
+                        neighborhoodsInSelectedQuadrant={this.state.neighborhoodsInSelectedQuadrant}
+                        updateNeighborhoodRestaurantsView={this.updateNeighborhoodRestaurantsView} />
+                )} />
 
-                    <Route path={match.url} render={ props => (
-                        <NeighborhoodsByQuadrant {...this.props}
-                            neighborhoodsInSelectedQuadrant={this.state.neighborhoodsInSelectedQuadrant}
-                            updateNeighborhoodRestaurantsView={this.updateNeighborhoodRestaurantsView} />
-                    )} />
+                <Route exact path={`${match.url}/:neighborhoodID/restaurants`} render={ props => (
+                    <NeighborhoodRestaurants {...this.props}
+                        neighborhoodRestaurants={this.state.neighborhoodRestaurants} />
+                )} />
 
-                    <Route exact path={`${match.url}/:neighborhoodName/restaurants`} render={ props => (
-                        <NeighborhoodRestaurants {...this.props}
-                            neighborhoodRestaurants={this.state.neighborhoodRestaurants}
-                            updateSelectedRestaurant={props.updateSelectedRestaurant} />
-                    )} />
-
-                    <Route exact path={`${match.url}/addneighborhood`} render={ props => (
-                        <AddNeighborhoodForm {...this.props}
-                            quadrants={this.state.quadrants}
-                            addNeighborhood={this.addNeighborhood}/>
-                    )} />
-
-                {/*</Switch>*/}
-
+                <Route exact path={`${match.url}/addneighborhood`} render={ props => (
+                    <AddNeighborhoodForm {...this.props}
+                        quadrants={this.state.quadrants}
+                        addNeighborhood={this.addNeighborhood}/>
+                )} />
 
             </div>
         );
