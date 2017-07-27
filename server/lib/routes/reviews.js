@@ -4,6 +4,13 @@ const Review = require('../models/review');
 
 router
 
+    .get('/', (req, res, next) => {
+        Review.find().lean()
+            .populate('restaurant user')
+            .then(reviews => res.send(reviews))
+            .catch(next);
+    })
+
     .get('/restaurant/:id', (req, res, next) => {
         const restaurantID = req.params.id;
         Review.find({ restaurant: restaurantID }).lean()
