@@ -2,6 +2,7 @@ import React from 'react';
 
 
 const RestaurantReviews = props => {
+    console.log('reviews from restaurantReviews: ', props.reviews);
     props.reviews.map(review => {
         return (
             <div key={props.review._id}>

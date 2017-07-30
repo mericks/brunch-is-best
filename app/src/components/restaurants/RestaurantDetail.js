@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import reviewService from '../../services/review-service';
 import restaurantService from '../../services/restaurant-service';
+import reviewService from '../../services/review-service';
 import RestaurantReviews from './RestaurantReviews';
 import AddReviewForm from '../forms/AddReviewForm';
 
@@ -17,9 +17,9 @@ class RestaurantDetail extends Component {
     }
 
     componentDidMount() {
-        restaurantService.getRestaurant(this.props.RestaurantID)
+        restaurantService.getRestaurant(this.props.restaurantID)
             .then(restaurant => this.setState({ restaurant }))
-        reviewService.getAllForRestaurant(this.props.RestaurantID)
+        reviewService.getAllForRestaurant(this.props.restaurantID)
             .then(reviews => this.setState({ reviews }))
     }
 
@@ -37,15 +37,16 @@ class RestaurantDetail extends Component {
     render() {
         return (
             <div>
-                <h3>{this.state.restaurant.name}</h3>
-                <p>{this.state.restaurant.address.street}</p>
+                <h3>THIS IS RESTO DETAIL</h3>
+                {/*<h3>{this.state.restaurant.name}</h3>*/}
+                {/*<p>{this.state.restaurant.address.street}</p>
                 <p>{this.state.restaurant.address.city}</p>
-                <p>{this.state.restaurant.address.zip}</p>
+                <p>{this.state.restaurant.address.zip}</p>*/}
 
-                <RestaurantReviews reviews={this.state.reviews}/>
-                <AddReviewForm selectedRestaurant={this.props.selectedRestaurant} addReview={this.addReview}/>
-                // TODO: Add logic so that this button only appears if userID matches resto createdBy
-                <button onClick={() => this.deleteRestaurant}>Delete Restaurant</button>
+                {/*<RestaurantReviews reviews={this.state.reviews} />*/}
+                <AddReviewForm selectedRestaurant={this.state.restaurant} addReview={this.addReview}/>
+                {/*// TODO: Add logic so that this button only appears if userID matches resto createdBy
+                <button onClick={() => this.deleteRestaurant}>Delete Restaurant</button>*/}
             </div>
         );
     }

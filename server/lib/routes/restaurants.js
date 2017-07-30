@@ -21,8 +21,10 @@ router
     })
 
     .get('/:id', (req, res, next) => {
-        Restaurant.findById(req.params.id).lean()
-            .populate('address createdBy')
+        const restaurantID = req.params.id;
+        console.log('restaurantID from route: ', restaurantID);
+        Restaurant.findById(restaurantID).lean()
+            // .populate('address createdBy')
             .then(restaurant => res.send(restaurant))
             .catch(next);
     })

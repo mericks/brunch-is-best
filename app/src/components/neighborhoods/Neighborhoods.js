@@ -37,7 +37,6 @@ class Neighborhoods extends Component {
             .then(() => this.updateNeighborhoodsInQuadrantView(this.state.selectedQuadrant));
         restaurantService.getAbbrv()
             .then(restaurantsAbbrv => this.setState({ restaurantsAbbrv }));
-        console.log('inside compdimnt restaurnatsAbbrv: ', this.state.restaurantsAbbrv);
     }
 
     addNeighborhood(neighborhood) {
