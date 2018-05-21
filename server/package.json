@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "brunchday server",
   "version": "1.0.0",
-  "description": "backend server for brunch-is-best",
+  "description": "backend server for brunchday",
   "main": "server.js",
   "scripts": {
     "lint": "eslint",
