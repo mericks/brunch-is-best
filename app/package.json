@@ -1,5 +1,5 @@
 {
-  "name": "brunch-is-best",
+  "name": "brunchday-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,7 +11,7 @@
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^6.10.3",
-    "react-scripts": "0.9.5"
+    "react-scripts": "1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
