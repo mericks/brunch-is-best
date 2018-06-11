@@ -10,8 +10,9 @@
     "react-scripts": "1.1.4"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-plugin-react": "^6.10.3"
+    "ajv": "^6.0.0",
+    "eslint": "^4.1.1",
+    "eslint-plugin-react": "^7.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
