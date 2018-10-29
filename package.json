@@ -1,14 +1,18 @@
 {
   "name": "brunchday-server",
   "version": "1.0.0",
-  "description": "backend server for brunchday",
+  "description": "Hyperlocal app for sharing favorite brunch spots among friends.",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix ./client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix ./client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint",
     "pretest": "npm run lint",
     "test": "mocha --recursive",
-    "start": "node server",
-    "start:watch": "nodemon server"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Michelle Erickson",
   "license": "MIT",
@@ -24,6 +28,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "concurrently": "^4.0.1",
     "eslint": "^3.19.0",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0"
