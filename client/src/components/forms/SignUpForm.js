@@ -24,7 +24,6 @@ class SignUpForm extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        console.log('to be sent to DB - formPayload', formPayload);
 
         authService.signup(formPayload)
         .then(() => this.props.handleSignIn())
