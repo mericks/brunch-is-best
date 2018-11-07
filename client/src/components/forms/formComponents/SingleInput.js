@@ -1,6 +1,7 @@
 import React from 'react';
+import './Forms.css';
 
-const SingleInput = (props) => (
+const SingleInput = props => (
     <div>
         <label>{props.title}</label>
         <input
@@ -8,9 +9,10 @@ const SingleInput = (props) => (
             type={props.inputType}
             value={props.content}
             onChange={props.controlFunc}
-            placeholder={props.placeholder} />
+            placeholder={props.placeholder}
+        />
     </div>
-); 
+);
 
 // SingleInput.propTypes = {
 //     title: PropTypes.string,
