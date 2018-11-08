@@ -6,6 +6,7 @@ const connect = require('./lib/utils/connect');
 connect(config.MONGODB_URI);
 
 const server = http.createServer(app);
+
 const port = config.PORT;
 
 server.listen(port, () => {
