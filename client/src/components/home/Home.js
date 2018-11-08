@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+
+// Components
 import TitleEntry from './TitleEntry';
+import InDevelopment from './InDevelopment';
+
+// Images
+import PancakeSplat from '../../assets/pancakeSplat.jpg';
+import BrunchTable from '../../assets/brunchTable.jpg';
 
 class Home extends Component {
-    state = {
-        x: 0,
-        y: 0
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            x: 0,
+            y: 0
+        };
+    }
 
     // credit: Gokhan Demirhan https://codepen.io/gokhandemirhan/pen/WObNOm
     componentWillMount() {
@@ -22,19 +32,22 @@ class Home extends Component {
     render() {
         return (
             <div>
-                {/* <img className='bg' style={{ width: this.state.x+'px', height: this.state.y+'px' }} /> */}
                 <img
                     className="bg"
-                    src={
-                        'https://source.unsplash.com/' +
-                        this.state.x +
-                        'x' +
-                        this.state.y +
-                        '/?brunch'
-                    }
+                    style={{
+                        width: this.state.x + 'px',
+                        height: this.state.y + 'px',
+                        backgroundSize: 'cover'
+                    }}
+                    src={PancakeSplat}
+                    // src={BrunchTable}
                 />
-
-                <TitleEntry />
+                <TitleEntry handleSignIn={this.props.handleSignIn} />
+                <InDevelopment
+                    style={{
+                        marginTop: 500 + 'px'
+                    }}
+                />
             </div>
         );
     }
