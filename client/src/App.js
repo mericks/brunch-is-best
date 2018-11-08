@@ -73,7 +73,7 @@ class App extends Component {
                             this.state.signedIn ? (
                                 <Redirect
                                     to={{
-                                        pathname: '/neighborhoods',
+                                        pathname: '/dashboard',
                                         state: { from: props.location }
                                     }}
                                 />
