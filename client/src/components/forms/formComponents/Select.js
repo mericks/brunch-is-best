@@ -1,16 +1,17 @@
 import React from 'react';
+import './Forms.css';
 
 const Select = props => (
     <div>
         <select
             name={props.name}
             value={props.selectedOption}
-            onChange={props.controlFunc} >
-            <option value=''>{props.placeholder}</option>
+            onChange={props.controlFunc}
+        >
+            <option value="">{props.placeholder}</option>
             {props.options.map(opt => (
-                <option
-                    key={opt}
-                    value={opt}>{opt}
+                <option key={opt} value={opt}>
+                    {opt}
                 </option>
             ))}
         </select>

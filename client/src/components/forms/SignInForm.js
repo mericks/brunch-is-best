@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import SingleInput from './formComponents/SingleInput';
 import authService from '../../services/auth-service';
 
@@ -7,14 +8,11 @@ class SignInForm extends Component {
         super(props);
         this.state = {
             email: '',
-            password: '',
+            password: ''
         };
-        this.handleFormSignIn = this.handleFormSignIn.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
-
-    handleFormSignIn(e) {
+    handleFormSignIn = e => {
         e.preventDefault();
 
         const formPayload = {
@@ -22,39 +20,44 @@ class SignInForm extends Component {
             password: this.state.password
         };
 
-        authService.signin(formPayload)
-        .then(() => this.props.handleSignIn())
-        .catch(err => console.log(err));
-    }
+        authService
+            .signin(formPayload)
+            .then(() => this.props.handleSignIn())
+            .catch(err => console.log(err));
+    };
 
-    handleChange(e) {
+    handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
-    }
+    };
 
     render() {
         return (
-            <form onSubmit={this.handleFormSignIn}>
-                <SingleInput
-                    title={'Email'}
-                    name={'email'}
-                    inputType={'text'}
-                    content={this.state.email}
-                    controlFunc={this.handleChange}
-                    placeholder={'Email'} />
-                <SingleInput 
-                    title={'Password'}
-                    name={'password'}
-                    inputType={'text'}
-                    content={this.state.password}
-                    controlFunc={this.handleChange}
-                    placeholder={'Password'} />
-                <input
-                    type='submit'
-                    value='Sign In' />
-            </form>
+            <div>
+                <form onSubmit={this.handleFormSignIn}>
+                    <SingleInput
+                        // title={'Email'}
+                        name={'email'}
+                        inputType={'text'}
+                        content={this.state.email}
+                        controlFunc={this.handleChange}
+                        placeholder={'Email'}
+                    />
+                    <SingleInput
+                        // title={'Password'}
+                        name={'password'}
+                        inputType={'text'}
+                        content={this.state.password}
+                        controlFunc={this.handleChange}
+                        placeholder={'Password'}
+                    />
+                    <input type="submit" value="Sign In" />
+                </form>
+                <p>
+                    Not a member? <Link to="/register">Join now</Link>
+                </p>
+            </div>
         );
-    };
-
+    }
 }
 
 export default SignInForm;

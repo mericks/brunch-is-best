@@ -1,11 +1,14 @@
 const http = require('http');
 const app = require('./lib/app');
-require ('./lib/connection');
+const config = require('./lib/utils/config');
+const connect = require('./lib/utils/connect');
+
+connect(config.MONGODB_URI);
 
 const server = http.createServer(app);
 
-const port = process.env.PORT || 5000;
+const port = config.PORT;
 
 server.listen(port, () => {
-    console.log('server running', server.address());
+    console.log('server running', server.address().port);
 });

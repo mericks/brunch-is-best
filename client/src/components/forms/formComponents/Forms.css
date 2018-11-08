@@ -1,0 +1,26 @@
+input,
+textarea,
+select,
+button {
+  width: 150px;
+  margin: 0;
+
+  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+  -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+  box-sizing: border-box;
+}
+
+input {
+  background: rgba(255, 255, 255, 0.65);
+  padding: 5px;
+  margin: 3px;
+  font-size: 1rem;
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+}
+
+input[type="submit"] {
+  background: rgba(128, 128, 128, 0.65);
+  /* font-family: "Dancing Script", cursive; */
+}
