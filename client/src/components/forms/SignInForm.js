@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import SingleInput from './formComponents/SingleInput';
 import authService from '../../services/auth-service';
 
@@ -51,7 +52,9 @@ class SignInForm extends Component {
                     />
                     <input type="submit" value="Sign In" />
                 </form>
-                <p>Not a member? Join now</p>
+                <p>
+                    Not a member? <Link to="/register">Join now</Link>
+                </p>
             </div>
         );
     }
